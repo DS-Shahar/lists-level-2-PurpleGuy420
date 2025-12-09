@@ -1,12 +1,12 @@
 public class Main {
-    
+
     public static void main(String[] args)
     {
         int [] a = {1,3,5,7};
         int [] b = {2,4,6,8};
         Node<Integer> list = buildList(a);
         Node<Integer> list2 = buildList(b);
-        Node<Integer> list3 = mergeSorted(list, list2);
+        Node<Integer> list3 = selectionSort(list, list2);
         NodePrint(list3);
     }
 
@@ -22,11 +22,46 @@ public class Main {
             p = p.getNext();
         }
         p.setNext(L2);
-        p = h;
 
-        
+        Node<Integer> combined = h.getNext();
+
+        Node<Integer> dum = new Node<Integer>(-1, null);
+        Node<Integer> tail = dum;
+
+        while (combined != null) {
+            Node<Integer> prev = null;
+            Node<Integer> cur = combined;
+
+            Node<Integer> minPrev = null;
+            Node<Integer> minNode = combined;
+
+            // find minimum node and its previous node
+            while (cur != null) {
+                if (cur.getValue() < minNode.getValue()) {
+                    minPrev = prev;
+                    minNode = cur;
+                }
+                prev = cur;
+                cur = cur.getNext();
+            }
+
+            // remove minNode from combined
+            if (minPrev == null) {
+                // minNode is at head
+                combined = minNode.getNext();
+            } else {
+                minPrev.setNext(minNode.getNext());
+            }
+
+            // append minNode to result (reusing the node)
+            minNode.setNext(null);
+            tail.setNext(minNode);
+            tail = tail.getNext();
+        }
+
+        return dum.getNext();
     }
-    
+
     public static Node<Integer> mergeSorted(Node<Integer> L1, Node<Integer> L2)
     {
         Node<Integer> p = new Node<Integer>(-1, null);
@@ -47,7 +82,7 @@ public class Main {
                 L2 = L2.getNext();
                 p = p.getNext();
             }
-            
+
         }
         if(L1==null)
         {
@@ -59,9 +94,9 @@ public class Main {
         }
         return h.getNext();
 
-        
+
     }
-    
+
     public static Node<Integer> buildList(int [] a)
     {
         Node<Integer> p = new Node<Integer>(a[0]);
@@ -85,4 +120,3 @@ public class Main {
         System.out.println(list.getValue());
     }
 }
-
