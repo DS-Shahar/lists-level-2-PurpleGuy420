@@ -35,7 +35,6 @@ public class Main {
             Node<Integer> minPrev = null;
             Node<Integer> minNode = combined;
 
-            // find minimum node and its previous node
             while (cur != null) {
                 if (cur.getValue() < minNode.getValue()) {
                     minPrev = prev;
@@ -45,15 +44,12 @@ public class Main {
                 cur = cur.getNext();
             }
 
-            // remove minNode from combined
             if (minPrev == null) {
-                // minNode is at head
                 combined = minNode.getNext();
             } else {
                 minPrev.setNext(minNode.getNext());
             }
 
-            // append minNode to result (reusing the node)
             minNode.setNext(null);
             tail.setNext(minNode);
             tail = tail.getNext();
