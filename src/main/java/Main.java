@@ -4,12 +4,55 @@ public class Main {
     {
         int [] a = {1,3,5,7};
         int [] b = {2,4,6,8};
+        int [] c = {9,2,8,3,8,5};
         Node<Integer> list = buildList(a);
         Node<Integer> list2 = buildList(b);
-        Node<Integer> list3 = selectionSort(list, list2);
-        NodePrint(list3);
+        Node<Integer> list3 = buildList(c);
+        System.out.println(distanceCount(list3, 8));
     }
 
+    public static int distanceCount(Node<Integer> L, int num)
+    {
+        if(!isIn(L, num))
+            return -1;
+        Node<Integer> dum = L;
+        int count = 0;
+        boolean found = false;
+        while(found == false && dum!=null)
+        {
+            if(dum.getValue()==num)
+                {
+                    found = true;
+                }
+            else
+                {
+                    count++;
+                    dum = dum.getNext();
+                }
+            
+
+        }
+        
+        int c = 0;
+        while(dum!=null)
+        {
+            if(dum.getValue()==num)
+                {
+                    c = 0;
+                    dum = dum.getNext();
+                }
+            else
+                {
+                    c++;
+                    dum = dum.getNext();
+                }
+            
+        }
+        count += c;
+        return count;
+
+    }
+    
     public static Node<Integer> selectionSort(Node<Integer> L1, Node<Integer> L2)
     {
         Node<Integer> p = new Node<Integer>(-1, null);
@@ -114,5 +157,18 @@ public class Main {
             list = list.getNext();
         }
         System.out.println(list.getValue());
+    }
+
+    public static boolean isIn(Node<Integer> list, int num)
+    {
+        while (list.hasNext()) {
+            if(list.getValue()==num)
+                return true;
+            list = list.getNext();
+        }
+        if(list.getValue()==num)
+            return true;
+        return false;
+
     }
 }
