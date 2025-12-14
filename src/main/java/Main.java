@@ -8,9 +8,27 @@ public class Main {
         Node<Integer> list = buildList(a);
         Node<Integer> list2 = buildList(b);
         Node<Integer> list3 = buildList(c);
-        System.out.println(distanceCount(list3, 8));
+        System.out.println(allDiff(list3));
     }
 
+    public static boolean allDiff(Node<Integer> L)
+    {
+        Node<Integer> hold = L.getNext();
+        while(L != null)
+        {
+            hold = L.getNext();
+            while(hold != null)
+            {
+                if(L.getValue()==hold.getValue())
+                    return false;
+                hold = hold.getNext();
+            }
+            L = L.getNext();
+        }
+        return true;
+        
+    }
+    
     public static int distanceCount(Node<Integer> L, int num)
     {
         if(!isIn(L, num))
